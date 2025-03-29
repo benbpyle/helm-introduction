@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+data:
+  BIND_ADDRESS: {{ .Values.container.environmentVariables.bindAddress | quote }}
+  RUST_LOG: {{ .Values.container.environmentVariables.rustLog | quote }}

@@ -35,9 +35,9 @@ COPY --from=builder /etc/group /etc/group
 WORKDIR /app
 
 # Copy our build
-COPY --from=builder /app/target/release/service-b ./
+COPY --from=builder /app/target/release/rust-service-1 ./
 
 # Use an unprivileged user.
 USER app_user:app_user
 EXPOSE 3000
-CMD ["/app/mock-service"]
+CMD ["/app/rust-service-1"]

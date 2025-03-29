@@ -1,19 +1,20 @@
-use axum::{
-    routing::get,
-    Router,
-};
+use axum::{routing::get, Router};
 
-// Handler for the root endpoint (`/`)
 async fn root_handler() -> &'static str {
+    tracing::info!("Hello, Axum!");
     "Hello, Axum!"
+}
+async fn second_handler() -> &'static str {
+    tracing::info!("Second handler");
+    "Second handler"
 }
 
 #[tokio::main]
 async fn main() {
     let bind_address = std::env::var("BIND_ADDRESS").expect("BIND_ADDRESS is required");
     let app = Router::new()
-        .route("/", get(root_handler));
-//        .with_state(app_state);
+        .route("/", get(root_handler))
+        .route("/second", get(second_handler));
     let listener = tokio::net::TcpListener::bind(bind_address.clone())
         .await
         .unwrap();

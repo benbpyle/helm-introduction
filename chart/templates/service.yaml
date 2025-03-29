@@ -1,15 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "chart.fullname" . }}
-  labels:
-    {{- include "chart.labels" . | nindent 4 }}
+  name: {{ .Release.Name }}-service
 spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
   selector:
-    {{- include "chart.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/name: rust-service-1
+    app: rust-service-1
+  ports:
+    - protocol: {{ .Values.container.containerPorts.protocol }}
+      port: {{ .Values.container.containerPorts.port }}
+      targetPort: {{ .Values.container.containerPorts.targetPort }}
